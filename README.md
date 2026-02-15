@@ -1,6 +1,6 @@
 # Bengal STM
 
-[![Build Status](https://github.com/gvonness-apolitical/bengal-stm/actions/workflows/ci.yml/badge.svg)](https://github.com/gvonness-apolitical/bengal-stm/actions/workflows/ci.yml)
+[![Build Status](https://github.com/Entrolution/bengal-stm/actions/workflows/ci.yml/badge.svg)](https://github.com/Entrolution/bengal-stm/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/ai.entrolution/bengal-stm_2.13)](https://maven-badges.herokuapp.com/maven-central/ai.entrolution/bengal-stm_2.13)
 [![Scala 2.13](https://img.shields.io/badge/Scala-2.13-red.svg)](https://www.scala-lang.org/)
 [![Scala 3](https://img.shields.io/badge/Scala-3-red.svg)](https://www.scala-lang.org/)
@@ -189,7 +189,7 @@ Bengals are a very playful and active cat breed. The name fits a library built o
 
 If you find Bengal STM useful, consider supporting its development:
 
-- [GitHub Sponsors](https://github.com/sponsors/gvonness-apolitical)
+- [GitHub Sponsors](https://github.com/sponsors/Entrolution)
 - [Patreon](https://www.patreon.com/Entrolution)
 
 ## Contributing
