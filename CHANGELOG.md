@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-02-15
+
+### Changed
+- Cross-build for Scala 2.13 and Scala 3, publishing `_2.13` and `_3` artifacts
+- Changed `asyncF` visibility to `private[stm]` for Scala 3 compatibility
+- Used sbt-typelevel for common compiler flags (removed from `build.sbt`)
+
+## [0.10.1] - 2026-02-15
+
+### Fixed
+- Fixed lock ordering deadlock in transaction commit
+- Fixed semaphore leak via bracket pattern in transaction runtime
+- Fixed `MutableMap` race condition by switching to `TrieMap`
+- Fixed `registerRunning` no-op bug in transaction scheduler
+
+### Added
+- FUNDING.yml for GitHub Sponsors and Patreon
+
 ## [0.10.0] - 2026-02-15
 
 ### Breaking
@@ -38,6 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Migrated to Typelevel SBT plugin (`sbt-typelevel`) for build management, CI, and publishing
 - Code cleanup: modifier ordering and style improvements
+
+## [0.9.4] - 2023-08-06
+
+### Changed
+- Code cleanup: modifier ordering improvements
 
 ## [0.9.3] - 2023-07-31
 
@@ -95,3 +118,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Intelligent runtime scheduler with static analysis phase
 - Semantic blocking via `waitFor` / retry mechanism
 - `handleErrorWith` for transaction-level error recovery
+
+[Unreleased]: https://github.com/Entrolution/bengal-stm/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/Entrolution/bengal-stm/compare/v0.10.1...v0.11.0
+[0.10.1]: https://github.com/Entrolution/bengal-stm/compare/v0.10.0...v0.10.1
+[0.10.0]: https://github.com/Entrolution/bengal-stm/compare/v0.9.6...v0.10.0
+[0.9.6]: https://github.com/Entrolution/bengal-stm/compare/v0.9.5...v0.9.6
+[0.9.5]: https://github.com/Entrolution/bengal-stm/compare/v0.9.4...v0.9.5
+[0.9.4]: https://github.com/Entrolution/bengal-stm/compare/v0.9.3...v0.9.4
+[0.9.3]: https://github.com/Entrolution/bengal-stm/compare/v0.9.2...v0.9.3
+[0.9.2]: https://github.com/Entrolution/bengal-stm/compare/v0.9.1...v0.9.2
+[0.9.1]: https://github.com/Entrolution/bengal-stm/compare/v0.9.0...v0.9.1
+[0.9.0]: https://github.com/Entrolution/bengal-stm/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/Entrolution/bengal-stm/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/Entrolution/bengal-stm/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/Entrolution/bengal-stm/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/Entrolution/bengal-stm/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/Entrolution/bengal-stm/compare/v0.3.10...v0.4.0
