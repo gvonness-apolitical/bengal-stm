@@ -1,6 +1,6 @@
-ThisBuild / tlBaseVersion := "0.11"
+ThisBuild / tlBaseVersion := "0.12"
 
-ThisBuild / tlVersionIntroduced := Map("3" -> "0.11.0")
+ThisBuild / tlVersionIntroduced := Map("3" -> "0.12.0")
 
 // Only publish on tagged releases, not snapshots on main
 ThisBuild / tlCiReleaseBranches := Seq()

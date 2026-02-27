@@ -21,9 +21,9 @@ Please include the following information in your report:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.11.x  | Yes                |
-| 0.10.x  | Maintenance only   |
-| < 0.10  | No                 |
+| 0.12.x  | Yes                |
+| 0.11.x  | Maintenance only   |
+| < 0.11  | No                 |
 
 ## Security Updates
 
