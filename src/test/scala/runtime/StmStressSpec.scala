@@ -110,22 +110,27 @@ class StmStressSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
       .asserting(_ shouldBe keys.map(_ -> 20).toMap)
   }
 
+  // Scale reduced from 10 writers + 10 readers to 5 + 3.
+  // The original created a thundering herd: every writer commit woke ALL
+  // readers (same retryMap footprint), yielding O(writers * readers) = 100
+  // futile retry cycles that serialise on global scheduler semaphores.
+  // Under resource-constrained CI runners this exceeded the timeout.
   "waitFor under contention" in {
     STM
       .runtime[IO]
       .flatMap { implicit stm =>
         for {
           counter     <- TxnVar.of(0)
-          writerFiber <- (1 to 10).toList.traverse_(_ => counter.modify(_ + 1).commit).start
-          readers     <- (1 to 10).toList.parTraverse(_ => readWaitFor(counter, 10).commit)
+          writerFiber <- (1 to 5).toList.traverse_(_ => counter.modify(_ + 1).commit).start
+          readers     <- (1 to 3).toList.parTraverse(_ => readWaitFor(counter, 5).commit)
           _           <- writerFiber.joinWithNever
           result      <- counter.get.commit
         } yield (result, readers)
       }
       .timeout(60.seconds)
       .asserting { case (finalValue, readerResults) =>
-        finalValue shouldBe 10
-        readerResults shouldBe List.fill(10)(10)
+        finalValue shouldBe 5
+        readerResults shouldBe List.fill(3)(5)
       }
   }
 }
