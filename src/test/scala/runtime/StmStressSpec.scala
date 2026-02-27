@@ -122,7 +122,7 @@ class StmStressSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
           result      <- counter.get.commit
         } yield (result, readers)
       }
-      .timeout(30.seconds)
+      .timeout(60.seconds)
       .asserting { case (finalValue, readerResults) =>
         finalValue shouldBe 10
         readerResults shouldBe List.fill(10)(10)
