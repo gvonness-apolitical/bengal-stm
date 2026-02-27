@@ -17,8 +17,8 @@
 package ai.entrolution
 package bengal.stm.runtime
 
-import bengal.stm.model.runtime._
-import bengal.stm.model._
+import scala.collection.concurrent.TrieMap
+import scala.collection.mutable.{ Map => MutableMap }
 
 import cats.effect.implicits._
 import cats.effect.kernel.Async
@@ -26,8 +26,8 @@ import cats.effect.std.Semaphore
 import cats.effect.{ Deferred, Ref }
 import cats.syntax.all._
 
-import scala.collection.concurrent.TrieMap
-import scala.collection.mutable.{ Map => MutableMap }
+import bengal.stm.model.runtime._
+import bengal.stm.model._
 
 private[stm] trait TxnRuntimeContext[F[_]] {
   this: AsyncImplicits[F] with TxnCompilerContext[F] with TxnLogContext[F] with TxnAdtContext[F] =>

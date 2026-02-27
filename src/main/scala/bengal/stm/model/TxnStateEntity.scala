@@ -17,12 +17,12 @@
 package ai.entrolution
 package bengal.stm.model
 
-import bengal.stm.model.runtime._
+import java.util.UUID
 
 import cats.effect.Ref
 import cats.effect.std.Semaphore
 
-import java.util.UUID
+import bengal.stm.model.runtime._
 
 private[stm] trait TxnStateEntity[F[_], V] {
   private[stm] def id: TxnVarId

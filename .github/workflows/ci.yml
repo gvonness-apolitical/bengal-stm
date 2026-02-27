@@ -61,6 +61,10 @@ jobs:
         if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
         run: sbt '++ ${{ matrix.scala }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck
 
+      - name: Check scalafix lints
+        if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
+        run: sbt '++ ${{ matrix.scala }}' 'scalafixAll --check'
+
       - name: Test
         run: sbt '++ ${{ matrix.scala }}' test
 
@@ -71,6 +75,9 @@ jobs:
       - name: Generate API documentation
         if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
         run: sbt '++ ${{ matrix.scala }}' doc
+
+      - name: Generate coverage report
+        run: sbt '++ ${{ matrix.scala }}' coverage test coverageReport
 
       - name: Make target directories
         if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v'))

@@ -17,9 +17,7 @@
 package ai.entrolution
 package runtime
 
-import bengal.stm.STM
-import bengal.stm.model._
-import bengal.stm.syntax.all._
+import scala.concurrent.duration._
 
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
@@ -28,7 +26,9 @@ import cats.syntax.parallel._
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.duration._
+import bengal.stm.STM
+import bengal.stm.model._
+import bengal.stm.syntax.all._
 
 class StmStressSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 

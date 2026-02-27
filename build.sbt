@@ -7,6 +7,19 @@ ThisBuild / tlCiReleaseBranches := Seq()
 
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec.temurin("21"))
 
+// CI: enable scalafix import ordering check
+ThisBuild / tlCiScalafixCheck := true
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
+
+// CI: add coverage reporting step after tests
+ThisBuild / githubWorkflowBuildPostamble ++= Seq(
+  WorkflowStep.Sbt(
+    List("coverage", "test", "coverageReport"),
+    name = Some("Generate coverage report")
+  )
+)
+
 ThisBuild / organization     := "ai.entrolution"
 ThisBuild / organizationName := "Greg von Nessi"
 ThisBuild / startYear        := Some(2023)

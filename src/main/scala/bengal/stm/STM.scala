@@ -17,15 +17,15 @@
 package ai.entrolution
 package bengal.stm
 
-import bengal.stm.api.internal.TxnApiContext
-import bengal.stm.model._
-import bengal.stm.model.runtime._
-import bengal.stm.runtime.{ TxnCompilerContext, TxnLogContext, TxnRuntimeContext }
-
 import cats.effect.Ref
 import cats.effect.kernel.Async
 import cats.effect.std.Semaphore
 import cats.implicits._
+
+import bengal.stm.api.internal.TxnApiContext
+import bengal.stm.model._
+import bengal.stm.model.runtime._
+import bengal.stm.runtime.{ TxnCompilerContext, TxnLogContext, TxnRuntimeContext }
 
 /** Software Transactional Memory runtime for Cats Effect.
   *

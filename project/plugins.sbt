@@ -1,3 +1,4 @@
 addSbtPlugin("org.jetbrains" % "sbt-ide-settings" % "1.1.0")
 addSbtPlugin("org.typelevel" % "sbt-typelevel"    % "0.8.5")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"     % "0.14.3")
 addSbtPlugin("org.scoverage" % "sbt-scoverage"    % "2.4.1")

@@ -17,14 +17,14 @@
 package ai.entrolution
 package runtime
 
-import bengal.stm.STM
-import bengal.stm.model.*
-import bengal.stm.syntax.all.*
-
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
+
+import bengal.stm.STM
+import bengal.stm.model._
+import bengal.stm.syntax.all._
 
 class TxnCompilerContextSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 

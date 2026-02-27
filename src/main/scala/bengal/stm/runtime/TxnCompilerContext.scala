@@ -17,16 +17,16 @@
 package ai.entrolution
 package bengal.stm.runtime
 
-import bengal.stm.model.TxnErratum._
-import bengal.stm.model._
-import bengal.stm.model.runtime._
+import scala.annotation.nowarn
 
 import cats.arrow.FunctionK
 import cats.data.StateT
 import cats.effect.kernel.Async
 import cats.syntax.all._
 
-import scala.annotation.nowarn
+import bengal.stm.model.TxnErratum._
+import bengal.stm.model._
+import bengal.stm.model.runtime._
 
 private[stm] trait TxnCompilerContext[F[_]] {
   this: AsyncImplicits[F] with TxnLogContext[F] with TxnAdtContext[F] =>
