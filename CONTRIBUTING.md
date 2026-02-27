@@ -30,7 +30,7 @@ Feature suggestions are welcome! Please provide:
 
 1. **Fork the repository** and create your branch from `main`
 2. **Write tests** for any new functionality
-3. **Ensure all tests pass** by running `sbt test`
+3. **Ensure all tests pass** by running `sbt +test` (cross-build)
 4. **Format your code** by running `sbt scalafmtAll`
 5. **Update documentation** if you're changing public APIs
 6. **Submit a pull request** with a clear description of your changes
@@ -42,20 +42,29 @@ Feature suggestions are welcome! Please provide:
 - Java 21 or later
 - sbt
 
-### Building
+### Cross-Build
+
+Bengal STM is cross-compiled for Scala 2.13 and Scala 3. Always use the `+` prefix to run commands against both Scala versions:
 
 ```bash
-# Compile the project
-sbt compile
+# Compile for both Scala 2.13 and 3
+sbt +compile
 
-# Run tests
-sbt test
+# Run tests for both Scala versions
+sbt +test
 
 # Format code
 sbt scalafmtAll
 
 # Check formatting
 sbt scalafmtCheckAll
+```
+
+To target a single Scala version during development:
+
+```bash
+sbt "++ 2.13.16" test
+sbt "++ 3.3.4" test
 ```
 
 ## Code Style
