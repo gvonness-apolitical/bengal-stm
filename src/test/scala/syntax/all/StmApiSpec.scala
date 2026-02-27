@@ -111,6 +111,36 @@ class StmApiSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     }
   }
 
+  "fromF" - {
+    "lift an effect into a transaction" in {
+      STM
+        .runtime[IO]
+        .flatMap { implicit stm =>
+          for {
+            result <- STM[IO].fromF(IO.pure(42)).commit
+          } yield result
+        }
+        .asserting(_ shouldBe 42)
+    }
+
+    "compose with other transaction operations" in {
+      STM
+        .runtime[IO]
+        .flatMap { implicit stm =>
+          for {
+            tVar <- TxnVar.of(10)
+            _ <- (for {
+                   extra <- STM[IO].fromF(IO.pure(5))
+                   v     <- tVar.get
+                   _     <- tVar.set(v + extra)
+                 } yield ()).commit
+            updated <- tVar.get.commit
+          } yield updated
+        }
+        .asserting(_ shouldBe 15)
+    }
+  }
+
   "waitFor" - {
     "should complete when predicate is satisfied" in {
       def program1(input: TxnVar[IO, Int])(implicit stm: STM[IO]): Txn[Int] =
