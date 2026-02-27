@@ -63,8 +63,8 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "commit does not modify underlying value" in withRuntime { implicit stm =>
       for {
-        tvar  <- TxnVar.of(42)
-        entry  = stm.TxnLogReadOnlyVarEntry(42, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogReadOnlyVarEntry(42, tvar)
         _     <- entry.commit
         value <- tvar.get
       } yield value shouldBe 42
@@ -72,24 +72,24 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "isDirty returns false" in withRuntime { implicit stm =>
       for {
-        tvar  <- TxnVar.of(42)
-        entry  = stm.TxnLogReadOnlyVarEntry(42, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogReadOnlyVarEntry(42, tvar)
         dirty <- entry.isDirty
       } yield dirty shouldBe false
     }
 
     "lock returns None" in withRuntime { implicit stm =>
       for {
-        tvar  <- TxnVar.of(42)
-        entry  = stm.TxnLogReadOnlyVarEntry(42, tvar)
-        lock  <- entry.lock
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogReadOnlyVarEntry(42, tvar)
+        lock <- entry.lock
       } yield lock shouldBe None
     }
 
     "idFootprint contains readIds only" in withRuntime { implicit stm =>
       for {
-        tvar      <- TxnVar.of(42)
-        entry      = stm.TxnLogReadOnlyVarEntry(42, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogReadOnlyVarEntry(42, tvar)
         footprint <- entry.idFootprint
       } yield {
         footprint.readIds shouldBe Set(tvar.runtimeId)
@@ -131,8 +131,8 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "commit writes current value to underlying TxnVar" in withRuntime { implicit stm =>
       for {
-        tvar  <- TxnVar.of(42)
-        entry  = stm.TxnLogUpdateVarEntry(42, 99, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogUpdateVarEntry(42, 99, tvar)
         _     <- entry.commit
         value <- tvar.get
       } yield value shouldBe 99
@@ -140,8 +140,8 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "isDirty reflects external modifications" in withRuntime { implicit stm =>
       for {
-        tvar   <- TxnVar.of(42)
-        entry   = stm.TxnLogUpdateVarEntry(42, 99, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogUpdateVarEntry(42, 99, tvar)
         dirty1 <- entry.isDirty
         _      <- tvar.set(50)
         dirty2 <- entry.isDirty
@@ -153,16 +153,16 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "lock returns Some with commitLock" in withRuntime { implicit stm =>
       for {
-        tvar  <- TxnVar.of(42)
-        entry  = stm.TxnLogUpdateVarEntry(42, 99, tvar)
-        lock  <- entry.lock
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogUpdateVarEntry(42, 99, tvar)
+        lock <- entry.lock
       } yield lock shouldBe Some(tvar.commitLock)
     }
 
     "idFootprint contains updatedIds only" in withRuntime { implicit stm =>
       for {
-        tvar      <- TxnVar.of(42)
-        entry      = stm.TxnLogUpdateVarEntry(42, 99, tvar)
+        tvar <- TxnVar.of(42)
+        entry = stm.TxnLogUpdateVarEntry(42, 99, tvar)
         footprint <- entry.idFootprint
       } yield {
         footprint.readIds shouldBe empty
@@ -205,32 +205,32 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "commit does not modify underlying map" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get
+        entry = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get
       } yield value shouldBe Map("a" -> 1)
     }
 
     "isDirty returns false" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
-        dirty   <- entry.isDirty
+        entry = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
+        dirty <- entry.isDirty
       } yield dirty shouldBe false
     }
 
     "lock returns None" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
-        lock    <- entry.lock
+        entry = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
+        lock <- entry.lock
       } yield lock shouldBe None
     }
 
     "idFootprint contains readIds only" in withRuntime { implicit stm =>
       for {
-        tvarMap   <- TxnVarMap.of(Map("a" -> 1))
-        entry      = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
+        tvarMap <- TxnVarMap.of(Map("a" -> 1))
+        entry = stm.TxnLogReadOnlyVarMapStructureEntry(Map("a" -> 1), tvarMap)
         footprint <- entry.idFootprint
       } yield {
         footprint.readIds shouldBe Set(tvarMap.runtimeId)
@@ -273,19 +273,19 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "commit is a no-op" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get
+        entry = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get
       } yield value shouldBe Map("a" -> 1)
     }
 
     "isDirty reflects external modifications" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
-        dirty1  <- entry.isDirty
-        _       <- tvarMap.addOrUpdate("a", 99)
-        dirty2  <- entry.isDirty
+        entry = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
+        dirty1 <- entry.isDirty
+        _      <- tvarMap.addOrUpdate("a", 99)
+        dirty2 <- entry.isDirty
       } yield {
         dirty1 shouldBe false
         dirty2 shouldBe true
@@ -295,15 +295,15 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "lock returns Some with commitLock" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
-        lock    <- entry.lock
+        entry = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
+        lock <- entry.lock
       } yield lock shouldBe Some(tvarMap.commitLock)
     }
 
     "idFootprint contains updatedIds only" in withRuntime { implicit stm =>
       for {
-        tvarMap   <- TxnVarMap.of(Map("a" -> 1))
-        entry      = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
+        tvarMap <- TxnVarMap.of(Map("a" -> 1))
+        entry = stm.TxnLogUpdateVarMapStructureEntry(Map("a" -> 1), Map("a" -> 2), tvarMap)
         footprint <- entry.idFootprint
       } yield {
         footprint.readIds shouldBe empty
@@ -346,32 +346,32 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "commit does not modify underlying map" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get("a")
+        entry = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get("a")
       } yield value shouldBe Some(1)
     }
 
     "isDirty returns false" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
-        dirty   <- entry.isDirty
+        entry = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
+        dirty <- entry.isDirty
       } yield dirty shouldBe false
     }
 
     "lock returns None" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
-        lock    <- entry.lock
+        entry = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
+        lock <- entry.lock
       } yield lock shouldBe None
     }
 
     "idFootprint contains readIds only" in withRuntime { implicit stm =>
       for {
-        tvarMap   <- TxnVarMap.of(Map("a" -> 1))
-        entry      = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
+        tvarMap <- TxnVarMap.of(Map("a" -> 1))
+        entry = stm.TxnLogReadOnlyVarMapEntry("a", Some(1), tvarMap)
         footprint <- entry.idFootprint
         rid       <- tvarMap.getRuntimeId("a")
       } yield {
@@ -415,37 +415,37 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "commit with Some current adds or updates value" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(99), tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get("a")
+        entry = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(99), tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get("a")
       } yield value shouldBe Some(99)
     }
 
     "commit with None current and Some initial deletes key" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry[String, Int]("a", Some(1), None, tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get("a")
+        entry = stm.TxnLogUpdateVarMapEntry[String, Int]("a", Some(1), None, tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get("a")
       } yield value shouldBe None
     }
 
     "commit with None current and None initial is a no-op" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry[String, Int]("b", None, None, tvarMap)
-        _       <- entry.commit
-        value   <- tvarMap.get("b")
+        entry = stm.TxnLogUpdateVarMapEntry[String, Int]("b", None, None, tvarMap)
+        _     <- entry.commit
+        value <- tvarMap.get("b")
       } yield value shouldBe None
     }
 
     "isDirty reflects external modifications" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
-        dirty1  <- entry.isDirty
-        _       <- tvarMap.addOrUpdate("a", 99)
-        dirty2  <- entry.isDirty
+        entry = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
+        dirty1 <- entry.isDirty
+        _      <- tvarMap.addOrUpdate("a", 99)
+        dirty2 <- entry.isDirty
       } yield {
         dirty1 shouldBe false
         dirty2 shouldBe true
@@ -455,10 +455,10 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "isDirty detects new key when initial was None" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry[String, Int]("b", None, Some(5), tvarMap)
-        dirty1  <- entry.isDirty
-        _       <- tvarMap.addOrUpdate("b", 10)
-        dirty2  <- entry.isDirty
+        entry = stm.TxnLogUpdateVarMapEntry[String, Int]("b", None, Some(5), tvarMap)
+        dirty1 <- entry.isDirty
+        _      <- tvarMap.addOrUpdate("b", 10)
+        dirty2 <- entry.isDirty
       } yield {
         dirty1 shouldBe false
         dirty2 shouldBe true
@@ -468,7 +468,7 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "lock returns commit lock from key's TxnVar" in withRuntime { implicit stm =>
       for {
         tvarMap <- TxnVarMap.of(Map("a" -> 1))
-        entry    = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
+        entry = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
         lock    <- entry.lock
         oTxnVar <- tvarMap.getTxnVar("a")
       } yield lock shouldBe oTxnVar.map(_.commitLock)
@@ -476,8 +476,8 @@ class TxnLogEntrySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
     "idFootprint contains updatedIds only" in withRuntime { implicit stm =>
       for {
-        tvarMap   <- TxnVarMap.of(Map("a" -> 1))
-        entry      = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
+        tvarMap <- TxnVarMap.of(Map("a" -> 1))
+        entry = stm.TxnLogUpdateVarMapEntry("a", Some(1), Some(2), tvarMap)
         footprint <- entry.idFootprint
         rid       <- tvarMap.getRuntimeId("a")
       } yield {
