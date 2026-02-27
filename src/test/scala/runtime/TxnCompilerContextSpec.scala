@@ -113,6 +113,54 @@ class TxnCompilerContextSpec extends AsyncFreeSpec with AsyncIOSpec with Matcher
           finalMap shouldBe Map("a" -> 1, "b" -> 2, "c" -> 3)
         }
     }
+
+    "correctly sets multiple keys in the same transaction" in {
+      STM
+        .runtime[IO]
+        .flatMap { implicit stm =>
+          for {
+            tVarMap <- TxnVarMap.of(Map("a" -> 1, "b" -> 2))
+            _ <- (for {
+                   _ <- tVarMap.set("a", 10)
+                   _ <- tVarMap.set("b", 20)
+                 } yield ()).commit
+            result <- tVarMap.get.commit
+          } yield result
+        }
+        .asserting(_ shouldBe Map("a" -> 10, "b" -> 20))
+    }
+
+    "correctly sets a key after reading the full map" in {
+      STM
+        .runtime[IO]
+        .flatMap { implicit stm =>
+          for {
+            tVarMap <- TxnVarMap.of(Map("a" -> 1, "b" -> 2))
+            _ <- (for {
+                   _ <- tVarMap.get
+                   _ <- tVarMap.set("a", 99)
+                 } yield ()).commit
+            result <- tVarMap.get.commit
+          } yield result
+        }
+        .asserting(_ shouldBe Map("a" -> 99, "b" -> 2))
+    }
+
+    "correctly modifies multiple keys in the same transaction" in {
+      STM
+        .runtime[IO]
+        .flatMap { implicit stm =>
+          for {
+            tVarMap <- TxnVarMap.of(Map("a" -> 1, "b" -> 2))
+            _ <- (for {
+                   _ <- tVarMap.modify("a", (v: Int) => v * 10)
+                   _ <- tVarMap.modify("b", (v: Int) => v * 10)
+                 } yield ()).commit
+            result <- tVarMap.get.commit
+          } yield result
+        }
+        .asserting(_ shouldBe Map("a" -> 10, "b" -> 20))
+    }
   }
 
   "waitFor transaction" - {
