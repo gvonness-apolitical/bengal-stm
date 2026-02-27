@@ -17,15 +17,15 @@
 package ai.entrolution
 package model
 
-import bengal.stm.STM
-import bengal.stm.model.*
-import bengal.stm.syntax.all.*
-
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
 import org.scalatest.EitherValues
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
+
+import bengal.stm.STM
+import bengal.stm.model._
+import bengal.stm.syntax.all._
 
 class TxnVarMapSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers with EitherValues {
   val baseMap: Map[String, Int] = Map("foo" -> 42, "bar" -> 27, "baz" -> 18)

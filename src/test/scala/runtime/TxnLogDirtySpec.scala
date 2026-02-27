@@ -17,16 +17,16 @@
 package ai.entrolution
 package runtime
 
-import bengal.stm.STM
-import bengal.stm.model.*
-import bengal.stm.syntax.all.*
+import scala.concurrent.duration._
 
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.duration.*
+import bengal.stm.STM
+import bengal.stm.model._
+import bengal.stm.syntax.all._
 
 class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 

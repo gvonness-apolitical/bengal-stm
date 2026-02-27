@@ -17,16 +17,17 @@
 package ai.entrolution
 package bengal.stm.model
 
-import bengal.stm.STM
-import bengal.stm.model.runtime._
+import java.util.UUID
+
+import scala.collection.mutable.{ Map => MutableMap }
 
 import cats.effect.Ref
 import cats.effect.kernel.Async
 import cats.effect.std.Semaphore
 import cats.syntax.all._
 
-import java.util.UUID
-import scala.collection.mutable.{ Map => MutableMap }
+import bengal.stm.STM
+import bengal.stm.model.runtime._
 
 /** A mutable transactional map from keys of type `K` to values of type `V`.
   *

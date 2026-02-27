@@ -17,16 +17,16 @@
 package ai.entrolution
 package bengal.stm.runtime
 
-import bengal.stm.model._
-import bengal.stm.model.runtime._
+import scala.annotation.nowarn
 
-import cats.effect.implicits._
 import cats.effect.Deferred
+import cats.effect.implicits._
 import cats.effect.kernel.{ Async, Resource }
 import cats.effect.std.Semaphore
 import cats.syntax.all._
 
-import scala.annotation.nowarn
+import bengal.stm.model._
+import bengal.stm.model.runtime._
 
 private[stm] trait TxnLogContext[F[_]] {
   this: AsyncImplicits[F] =>

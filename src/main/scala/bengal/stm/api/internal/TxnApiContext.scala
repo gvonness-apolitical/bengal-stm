@@ -17,14 +17,14 @@
 package ai.entrolution
 package bengal.stm.api.internal
 
-import bengal.stm.model.TxnErratum._
-import bengal.stm.model._
-import bengal.stm.runtime.TxnRuntimeContext
+import scala.util.{ Failure, Success, Try }
 
 import cats.effect.kernel.Async
 import cats.free.Free
 
-import scala.util.{ Failure, Success, Try }
+import bengal.stm.model.TxnErratum._
+import bengal.stm.model._
+import bengal.stm.runtime.TxnRuntimeContext
 
 private[stm] trait TxnApiContext[F[_]] {
   this: AsyncImplicits[F] with TxnRuntimeContext[F] with TxnAdtContext[F] =>

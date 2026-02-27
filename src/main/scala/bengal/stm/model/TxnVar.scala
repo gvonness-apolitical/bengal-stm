@@ -17,13 +17,13 @@
 package ai.entrolution
 package bengal.stm.model
 
-import bengal.stm.STM
-import bengal.stm.model.runtime._
-
 import cats.effect.Ref
 import cats.effect.kernel.Async
 import cats.effect.std.Semaphore
 import cats.syntax.all._
+
+import bengal.stm.STM
+import bengal.stm.model.runtime._
 
 /** A mutable transactional variable holding a single value of type `T`.
   *
