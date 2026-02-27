@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-02-27
+
+### Fixed
+- Multi-key map bug in `TxnLogContext` where `setVarMapValue` and `modifyVarMapValue` used the map's structure runtime ID instead of the per-key runtime ID, causing multiple set/modify operations for different keys in the same transaction to overwrite each other's log entries
+
+### Added
+- Scalafix CI enforcement with import ordering checks
+- Code coverage reporting in CI
+- 77 new tests (62 → 139, 2 ignored as flaky): targeted coverage for `TxnVarMap`, `TxnVar`, `waitFor`, `handleErrorWith`, `pure`/`delay`, `TxnLogEntry` types, and multi-key regression tests
+
+### Changed
+- Scala 3 bumped from 3.3.4 to 3.3.7 LTS
+- ScalaCheck bumped from 1.18.1 to 1.19.0
+- cats-effect-testing bumped from 1.6.0 to 1.7.0
+- sbt-typelevel bumped from 0.8.4 to 0.8.5
+- Refactored `TxnLogContext`: extracted `getLogEntry` helper, unified duplicate entry/value write methods (−12% lines)
+- Adjusted CI stress test timeouts for reliability
+- Repository moved from `gvonness-apolitical` to `Entrolution` organisation
+- Updated CONTRIBUTING.md with cross-build guidance and CODE_OF_CONDUCT.md contact
+
 ## [0.11.0] - 2026-02-15
 
 ### Changed
@@ -119,7 +139,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Semantic blocking via `waitFor` / retry mechanism
 - `handleErrorWith` for transaction-level error recovery
 
-[Unreleased]: https://github.com/Entrolution/bengal-stm/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/Entrolution/bengal-stm/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/Entrolution/bengal-stm/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/Entrolution/bengal-stm/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/Entrolution/bengal-stm/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/Entrolution/bengal-stm/compare/v0.9.6...v0.10.0
