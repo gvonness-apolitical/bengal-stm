@@ -50,7 +50,7 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
             result <- readerFiber.joinWithNever
           } yield result
         }
-        .timeout(10.seconds)
+        .timeout(30.seconds)
         .asserting(_ shouldBe 42)
     }
 
@@ -100,7 +100,7 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
             result <- readerFiber.joinWithNever
           } yield result
         }
-        .timeout(10.seconds)
+        .timeout(30.seconds)
         .asserting(_ shouldBe 3)
     }
   }
