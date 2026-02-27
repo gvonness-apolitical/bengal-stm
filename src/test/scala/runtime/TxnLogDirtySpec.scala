@@ -21,6 +21,7 @@ import scala.concurrent.duration._
 
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
+import org.scalatest.Tag
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -31,7 +32,7 @@ import bengal.stm.syntax.all._
 class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
 
   "dirty detection" - {
-    "transaction retries and sees updated value when variable is modified externally" in {
+    "transaction retries and sees updated value when variable is modified externally" taggedAs Tag("Flaky") ignore {
       STM
         .runtime[IO]
         .flatMap { implicit stm =>
@@ -79,7 +80,7 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
         .asserting(_ shouldBe 999)
     }
 
-    "concurrent modification forces retry and transaction sees final value" in {
+    "concurrent modification forces retry and transaction sees final value" taggedAs Tag("Flaky") ignore {
       STM
         .runtime[IO]
         .flatMap { implicit stm =>

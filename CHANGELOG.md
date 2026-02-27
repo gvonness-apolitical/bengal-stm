@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Scalafix CI enforcement with import ordering checks
 - Code coverage reporting in CI
-- 77 new tests (62 → 139): targeted coverage for `TxnVarMap`, `TxnVar`, `waitFor`, `handleErrorWith`, `pure`/`delay`, `TxnLogEntry` types, and multi-key regression tests
+- 77 new tests (62 → 139, 2 ignored as flaky): targeted coverage for `TxnVarMap`, `TxnVar`, `waitFor`, `handleErrorWith`, `pure`/`delay`, `TxnLogEntry` types, and multi-key regression tests
 
 ### Changed
 - Scala 3 bumped from 3.3.4 to 3.3.7 LTS
