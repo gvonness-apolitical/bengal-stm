@@ -60,13 +60,12 @@ object QuickStart extends IOApp.Simple {
 |:--------|-------------|:---------------|:------|
 | `STM.runtime[F]` | Creates a runtime in an `F[_]` container whose transaction results can be lifted into a container `F[_]` via `commit` | `def runtime[F[_]: Async]: F[STM[F]]` | |
 | `txnVar.get.commit` | Commits a transaction and lifts the result into `F[_]` | `def commit: F[V]` | |
-| `TxnVar.of[List[Int]](List())` | Creates a transactional variable | `def of[T](value: T): F[TxnVar[T]]` | |
-| `TxnVarMap.of[String, Int](Map())` | Creates a transactional map | `of[K, V](valueMap: Map[K, V]): F[TxnVarMap[K, V]]` | |
+| `TxnVar.of[IO, List[Int]](List())` | Creates a transactional variable | `def of[F[_]: STM: Async, T](value: T): F[TxnVar[F, T]]` | |
+| `TxnVarMap.of[IO, String, Int](Map())` | Creates a transactional map | `def of[F[_]: STM: Async, K, V](valueMap: Map[K, V]): F[TxnVarMap[F, K, V]]` | |
 | `txnVar.get` | Retrieves value of transactional variable | `def get: Txn[V]` | |
 | `txnVarMap.get` | Retrieves an immutable map (i.e. a view) representing transactional map state | `def get: Txn[Map[K, V]]` | Performance-wise it is better to retrieve individual keys instead of acquiring the entire map |
 | `txnVarMap.get("David")` | Retrieves optional value depending on whether key exists in the map | `def get(key: K): Txn[Option[V]]` | Will raise an error if the key is never created (previously or current transaction). A `None` is returned if the value has been deleted in the current transaction. |
 | `txnVar.set(100)` | Sets the value of transactional variable | `def set(newValue: V): Txn[Unit]` | |
-| `txnVar.setF(Async[F].pure(100))` | Sets the value of transactional variable via an abstract effect wrapped in `F` | `def setF[F[_]: Async](newValue: V): Txn[Unit]` | Ensure `F[V]` does not encapsulate side-effects |
 | `txnVarMap.set(Map("David" -> 100))` | Uses an immutable map to set the transactional map state | `def set(newValueMap: Map[K, V]): Txn[Unit]` | Performance-wise it is better to set individual keys instead of setting the entire map. This operation will create/delete key-values as needed. |
 | `txnVarMap.set("David", 100)` | Upserts the key-value into the transactional map | `def set(key: K, newValue: V): Txn[Unit]` | Will create the key-value in the transactional map if the key was not present |
 | `txnVar.modify(_ + 5)` | Modifies the value of a transactional variable | `def modify(f: V => V): Txn[Unit]` | |

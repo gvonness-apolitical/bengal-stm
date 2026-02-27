@@ -34,12 +34,15 @@ import cats.implicits._
   * classes to build and commit transactions.
   *
   * {{{
-  * for {
-  *   stm     <- STM.runtime[IO]
-  *   counter <- stm.TxnVar.of(0)
-  *   _       <- counter.modify(_ + 1).commit(stm)
-  *   value   <- counter.get.commit(stm)
-  * } yield value
+  * import bengal.stm.model.TxnVar
+  *
+  * STM.runtime[IO].flatMap { implicit stm =>
+  *   for {
+  *     counter <- TxnVar.of[IO, Int](0)
+  *     _       <- counter.modify(_ + 1).commit
+  *     value   <- counter.get.commit
+  *   } yield value
+  * }
   * }}}
   *
   * @tparam F

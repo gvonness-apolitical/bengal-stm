@@ -8,9 +8,5 @@ target
 /.settings
 /.bsp
 /src/main/resources/dataDecrypted/
-/src/main/results/*.numbers
-/src/main/results/*.xlsx
-/src/main/results/*/*.png
-/doc/*.aux
-/doc/*.log
-/doc/*.synctex.gz
+scoverage-data/
+scoverage-report/
