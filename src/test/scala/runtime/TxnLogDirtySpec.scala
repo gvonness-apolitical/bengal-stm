@@ -45,8 +45,8 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
                              v <- tVar.get
                            } yield v).commit.start
             // Writer sets the var then signals
-            _ <- tVar.set(42).commit
-            _ <- signal.set(true).commit
+            _      <- tVar.set(42).commit
+            _      <- signal.set(true).commit
             result <- readerFiber.joinWithNever
           } yield result
         }
@@ -71,8 +71,8 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
         .runtime[IO]
         .flatMap { implicit stm =>
           for {
-            tVar <- TxnVar.of(0)
-            _    <- tVar.set(999).commit
+            tVar   <- TxnVar.of(0)
+            _      <- tVar.set(999).commit
             result <- tVar.get.commit
           } yield result
         }
@@ -93,10 +93,10 @@ class TxnLogDirtySpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
                              v <- counter.get
                            } yield v).commit.start
             // Writer increments counter multiple times, then opens the gate
-            _ <- counter.set(1).commit
-            _ <- counter.set(2).commit
-            _ <- counter.set(3).commit
-            _ <- gate.set(true).commit
+            _      <- counter.set(1).commit
+            _      <- counter.set(2).commit
+            _      <- counter.set(3).commit
+            _      <- gate.set(true).commit
             result <- readerFiber.joinWithNever
           } yield result
         }
