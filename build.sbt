@@ -5,6 +5,8 @@ ThisBuild / tlVersionIntroduced := Map("3" -> "0.12.0")
 // Only publish on tagged releases, not snapshots on main
 ThisBuild / tlCiReleaseBranches := Seq()
 
+ThisBuild / githubWorkflowOSes := Seq("blacksmith-4vcpu-ubuntu-2204")
+
 ThisBuild / githubWorkflowJavaVersions := Seq(JavaSpec.temurin("21"))
 
 // CI: enable scalafix import ordering check

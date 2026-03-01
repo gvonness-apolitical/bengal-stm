@@ -27,7 +27,7 @@ jobs:
     name: Test
     strategy:
       matrix:
-        os: [ubuntu-22.04]
+        os: [blacksmith-4vcpu-ubuntu-2204]
         scala: [2.13, 3]
         java: [temurin@21]
     runs-on: ${{ matrix.os }}
@@ -58,22 +58,22 @@ jobs:
         run: sbt githubWorkflowCheck
 
       - name: Check headers and formatting
-        if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
+        if: matrix.java == 'temurin@21' && matrix.os == 'blacksmith-4vcpu-ubuntu-2204'
         run: sbt '++ ${{ matrix.scala }}' headerCheckAll scalafmtCheckAll 'project /' scalafmtSbtCheck
 
       - name: Check scalafix lints
-        if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
+        if: matrix.java == 'temurin@21' && matrix.os == 'blacksmith-4vcpu-ubuntu-2204'
         run: sbt '++ ${{ matrix.scala }}' 'scalafixAll --check'
 
       - name: Test
         run: sbt '++ ${{ matrix.scala }}' test
 
       - name: Check binary compatibility
-        if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
+        if: matrix.java == 'temurin@21' && matrix.os == 'blacksmith-4vcpu-ubuntu-2204'
         run: sbt '++ ${{ matrix.scala }}' mimaReportBinaryIssues
 
       - name: Generate API documentation
-        if: matrix.java == 'temurin@21' && matrix.os == 'ubuntu-22.04'
+        if: matrix.java == 'temurin@21' && matrix.os == 'blacksmith-4vcpu-ubuntu-2204'
         run: sbt '++ ${{ matrix.scala }}' doc
 
       - name: Generate coverage report
@@ -100,7 +100,7 @@ jobs:
     if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v'))
     strategy:
       matrix:
-        os: [ubuntu-22.04]
+        os: [blacksmith-4vcpu-ubuntu-2204]
         java: [temurin@21]
     runs-on: ${{ matrix.os }}
     steps:
